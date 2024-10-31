@@ -1,5 +1,14 @@
 import express from 'express'
-import { supabase } from './config.js';
+import { config as configDotenv } from 'dotenv';
+import { createClient } from '@supabase/supabase-js';
+
+configDotenv();
+
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
+
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
 
 const app  = express();
 const PORT = process.env.PORT || 3000;
@@ -17,10 +26,9 @@ app.get('/message', (req, res) => {
 app.get('/queryDB', async (req, res) => {
     console.log("test");
     const { data, error } = await supabase
-        .from('default')
-        .select('*')
-    
-    console.log(data);
+        .from('table1')
+        .select()
+    console.log("data: ", data)
     if (error) {
         console.error('Error querying DB', error);
         return res.status(500).json({error: 'Failed to query'});

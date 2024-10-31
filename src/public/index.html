@@ -22,6 +22,9 @@
 
                 const data = await response.json();
                 const resultsDiv = document.getElementById('queryResults');
+                console.log("response: ", response);
+                console.log("response status: ", response.status);
+                console.log("data: ", data);
                 resultsDiv.innerHTML = '';
 
                 data.forEach(result => {
