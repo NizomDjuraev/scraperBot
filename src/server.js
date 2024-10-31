@@ -14,6 +14,22 @@ app.get('/message', (req, res) => {
     res.send("message");
 });
 
+app.get('/queryDB', async (req, res) => {
+    console.log("test");
+    const { data, error } = await supabase
+        .from('default')
+        .select('*')
+    
+    console.log(data);
+    if (error) {
+        console.error('Error querying DB', error);
+        return res.status(500).json({error: 'Failed to query'});
+    }
+    else {    
+        res.status(200).json(data)
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`)
 })

@@ -8,5 +8,33 @@
 <body>
     <h1>Welcome</h1>
     <p>This is the home page.</p>
+
+
+    <button id="fetchButton">Query DB</button>
+    <div id="queryResults"></div>
+
+    <script>
+        document.getElementById('fetchButton').addEventListener('click', async () => {
+            console.log("fetch button clicked");
+            try {
+                const response = await fetch('/queryDB');
+                if(!response.ok) throw new Error('Error from fetch');
+
+                const data = await response.json();
+                const resultsDiv = document.getElementById('queryResults');
+                resultsDiv.innerHTML = '';
+
+                data.forEach(result => {
+                    const resultElement = document.createElement('p');
+                    resultElement.textContent = `Result: ${result.id}, Description: ${result.description}, Timestamp: ${result.created_at}`;
+                    resultsDiv.appendChild(resultElement);
+                });
+
+
+            } catch (error) {
+                console.error('Fetch try/catch error: ', error);
+            }
+        })
+    </script>
 </body>
 </html>
