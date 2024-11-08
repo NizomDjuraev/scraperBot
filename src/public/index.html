@@ -11,7 +11,10 @@
 
 
     <button id="fetchButton">Query DB</button>
+    <button id="scrapeButton">Scrape Google</button>
     <div id="queryResults"></div>
+    <div id="fetchResults"></div>
+
 
     <script>
         document.getElementById('fetchButton').addEventListener('click', async () => {
@@ -38,7 +41,29 @@
                 console.error('Fetch try/catch error: ', error);
             }
         })
+<<<<<<< Updated upstream
         
+=======
+
+        document.getElementById('scrapeButton').addEventListener('click', async () => {
+            console.log("scrape button clicked");
+            try {
+                const response = await fetch('/scrapeTest');
+                if(!response.ok) throw new Error('Error from fetch');
+
+                const data = await response.json();
+                const resultsDiv = document.getElementById('fetchResults');
+                console.log("response: ", response);
+                console.log("response status: ", response.status);
+                console.log("data: ", data);
+                resultsDiv.innerHTML = response;
+
+
+            } catch (error) {
+                console.error('Fetch try/catch error: ', error);
+            }
+        })
+>>>>>>> Stashed changes
     </script>
     <a href="miltonPage.html">
     <button id="miltonhtml">GO -> MILTON</button>

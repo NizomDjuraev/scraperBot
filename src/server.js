@@ -1,6 +1,8 @@
 import express from 'express'
 import { config as configDotenv } from 'dotenv';
 import { createClient } from '@supabase/supabase-js';
+import * as cheerio from 'cheerio';
+import axios from 'axios';
 
 configDotenv();
 
@@ -37,6 +39,22 @@ app.get('/queryDB', async (req, res) => {
         res.status(200).json(data)
     }
 });
+
+app.get('/scrapeTest', async (req, res) => {
+    const keyword = "coffee";
+
+    scrapeSite(keyword).then(result => {
+        console.log(result)
+    }).catch(err => console.log(err))
+
+})
+
+async function scrapeSite(keyword) {
+    const url = `https://www.google.com/search?q=${keyword}&tbm=isch`;
+    const {data } = await axios.get(url);
+    const $ = cheerio.load(data);
+    return $
+}
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`)
